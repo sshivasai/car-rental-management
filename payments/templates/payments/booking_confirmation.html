@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .header img {
+            max-width: 50px;
+            height: auto;
+        }
+        .company-name {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            padding-bottom: 20px;
+        }
+        .details-container {
+            margin-top: 20px;
+        }
+        .details {
+            margin-bottom: 20px;
+        }
+        .details h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .details p {
+            margin-bottom: 5px;
+        }
+        .car-image {
+            max-width: 150px;
+            height: auto;
+            float: right;
+        }
+        .download-receipt {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .download-receipt a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .about-us {
+            margin-top: 30px;
+        }
+        .about-us h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .about-us p {
+            margin-bottom: 10px;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 10px 0;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://cdn.pixabay.com/photo/2012/04/28/18/53/car-43993_1280.png" alt="Direct Rental Limited Logo">
+        </div>
+        <div class="company-name">Direct Rental Limited</div>
+        <div class="details-container">
+            <div class="details">
+                <h2>Booking Details</h2>
+                <img src="{{ booking.car.car_image }}" alt="Car Image" class="car-image">
+                <p><strong>Booking ID:</strong> {{ booking.booking_id }}</p>
+                <p><strong>Car:</strong> {{ booking.car.make }} {{ booking.car.model }}</p>
+                <p><strong>Pickup Location:</strong> {{ booking.pickup_location.location_city }}</p>
+                <p><strong>Dropoff Location:</strong> {{ booking.dropoff_location.location_city }}</p>
+                <p><strong>Pickup Date & Time:</strong> {{ booking.pickup_datetime }}</p>
+                <p><strong>Dropoff Date & Time:</strong> {{ booking.dropoff_datetime }}</p>
+                <p><strong>Payment Status:</strong> {{ payment.status }}</p>
+                <p><strong>Coupon Code:</strong> {% if booking.coupon %}{{ booking.coupon.code }}{% else %}N/A{% endif %}</p>
+                <p><strong>Actual Price:</strong> ${{ booking.actual_price }}</p>
+                <p><strong>Discount:</strong> ${{ booking.discount }}</p>
+                <p><strong>Taxes:</strong> ${{ booking.taxes }}</p>
+                <p><strong>Total Price:</strong> ${{ booking.final_price }}</p>
+            </div>
+            
+        </div>
+
+        <div class="download-receipt">
+            <p>Download your receipt <a href="{{ receipt_url }}" target="_blank">here</a>.</p>
+        </div>
+    </div>
+</body>
+
+<section id="about">
+    <h2>About Direct Car Rentals</h2>
+    <p>Direct Car Rentals is your one-stop shop for a convenient and hassle-free car rental experience. We offer a diverse fleet of vehicles to suit your needs, from compact cars for city driving to spacious SUVs for road trips. Our commitment to quality, affordability, and exceptional customer service ensures a smooth and enjoyable journey every time.</p>
+    <p>Whether you're a business traveler, a vacationer exploring new horizons, or simply need a car for a weekend getaway, Direct Car Rentals is here to help. We offer flexible rental options, competitive rates, and convenient locations to make your car rental experience seamless.</p>
+</section>
+<footer>
+    <div class="container">
+        <p>&copy; 2024 Direct Car Rentals. All rights reserved.</p>
+    </div>
+</footer>
+</html>

@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main>
+  <div class="filter-container">
+    <form id="filterForm" class="filter-form">
+      
+      <div class="filter-container">
+        <form id="filterForm" class="filter-form">
+          <div class="filter-item">
+            <label for="filterLocation">Location:</label>
+            <select id="filterLocation" name="location">
+              <option value="">All Locations</option>
+              {% for location in locations %}
+                <option value="{{ location }}" {% if request.GET.location == location %}selected{% endif %}>{{ location }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="filter-item">
+            <label for="filterPrice">Max Price per Hour:</label>
+            <input type="number" id="filterPrice" name="max_price" value="{{ request.GET.max_price }}" min="0" style="width: 80px;">
+            <span class="error-message" style="color: red; display: none;">Please enter a valid number (positive).</span>
+          </div>
+          <div class="filter-item">
+            <label for="sortOrder">Sort By:</label>
+            <select id="sortOrder" name="sort">
+              <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
+              <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label for="pickupDate">Pickup Date:</label>
+            <input type="date" id="pickupDate" name="pickup_date" value="{{ request.GET.pickup_date }}">
+          </div>
+          <div class="filter-item">
+            <label for="availability">Availability:</label>
+            <select id="availability" name="availability">
+              <option value="">Any</option>
+              <option value="available" {% if request.GET.availability == 'available' %}selected{% endif %}>Available Now</option>
+              <option value="available_later" {% if request.GET.availability == 'available_later' %}selected{% endif %}>Available Later</option>
+              <option value="unavailable" {% if request.GET.availability == 'unavailable' %}selected{% endif %}>Unavailable</option>
+            </select>
+          </div>
+          <button type="submit" class="filter-button">Apply Filters</button>
+<a href="{% url 'cars_list' %}" class="reset-button">Reset Filters</a>
+        </form>
+      </div>
+    </form>
+  </div>
+
+  <div class="cars-container">
+    {% if cars_with_stock %}
+      {% for car_data in cars_with_stock %}
+        {% for stock in car_data.stocks %}
+          <div class="car-tile {% if stock.availability_status == 'Unavailable' %}unavailable{% endif %}">
+            <img src="{{ car_data.car.car_image }}" alt="{{ car_data.car.make }} {{ car_data.car.model }}" class="car-image">
+            <div class="car-info">
+              <h3>{{ car_data.car.make }} {{ car_data.car.model }}</h3>
+              <p><strong>Type:</strong> {{ car_data.car.car_type }}</p>
+              <p><strong>Capacity:</strong> {{ car_data.car.capacity }}</p>
+              <p><strong>Price per hour:</strong> ${{ car_data.car.price_per_hour }}</p>
+              <p><strong>Available Location:</strong> {{ stock.location }}</p>
+              <p><strong>Availability:</strong>
+                {% if stock.availability_status == 'Unavailable' %}
+                  <span class="unavailable-text">Unavailable</span>
+                {% else %}
+                  {{ stock.availability_status }}
+                {% endif %}
+              </p>
+              
+              {% if stock.availability_status == 'Unavailable' %}
+    <button class="book-now-button-unavailable-button">Unavailable Now</button>
+              {% else %}
+              {% if user.is_authenticated %}
+              <a href="{% url 'booking_view' stock.stock_id %}" class="book-now-button">Book Now</a>
+          {% else %}
+              <a href="{% url 'login_page' %}?next={% url 'booking_view' stock.stock_id %}" class="book-now-button">Login to Book</a>
+          {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    {% else %}
+      <p class="no-cars">No cars available for the selected filter.</p>
+    {% endif %}
+  </div>
+</main>
+
+<style>
+  .filter-container {
+    margin: 01px 0;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .car-image {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+  }
+  .filter-item {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .filter-item:last-child {
+    margin-right: 0;
+  }
+
+  .filter-button, .reset-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .reset-button {
+    background-color: #dc3545;
+  }
+
+  .reset-button:hover {
+    background-color: #c82333;
+  }
+
+  .cars-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+  }
+
+  .car-tile {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+    transition: opacity 0.3s ease;
+  }
+
+  .car-tile:hover {
+    opacity: 0.8;
+  }
+  
+
+  .car-tile.unavailable {
+    opacity: 0.5;
+  }
+
+  .car-tile .book-now-button {
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .car-tile:hover .book-now-button {
+    opacity: 1;
+  }
+
+  .car-tile .book-now-button-unavailable-button {
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #a72828;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  .car-tile:hover .book-now-button-unavailable-button {
+    opacity: 1;
+  }
+
+  .car-info {
+    text-align: left;
+    padding-top: 10px;
+  }
+
+  .car-info h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  .car-info p {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .unavailable-text {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  .error-message {
+    color: red;
+    display: none;
+  }
+
+  .filter-button {
+    margin-right: 10px; 
+}
+</style>
+
+{% endblock %}

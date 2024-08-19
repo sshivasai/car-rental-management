@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'users/style.css' %}">
+<div class="login-container">
+    <form method="POST" action="{% url 'login-api' %}">
+        {% csrf_token %}
+        <h3>Login Here</h3>
+
+        <label for="email">Email</label>
+        <input type="email" placeholder="Email" id="email" name="email" required>
+
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" id="password" name="password" required>
+
+        <button type="submit">Log In</button>
+        
+        <p>Don't have an account? <a href="{% url 'register_page' %}">Sign up here</a></p>
+    </form>
+    
+</div>
+{% endblock %}

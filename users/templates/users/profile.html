@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'users/style_profile.css' %}">
+<div class="container-profile">
+  <h2>Welcome, {{ user.fname }}</h2>
+  
+  <div class="profile-info">
+    <div class="profile-details">
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>First Name:</strong> {{ user.fname }}</p>
+      <p><strong>Last Name:</strong> {{ user.lname }}</p>
+      <p><strong>Gender:</strong> {{ user.gender }}</p>
+      <p><strong>Phone:</strong> {{ user.phone }}</p>
+      <p><strong>License Number:</strong> {{ user.license_no }}</p>
+    </div>
+    
+    <div class="profile-picture">
+      
+      <img src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'users/profile_images/User-Profile-PNG-Free-Download.png' %}{% endif %}" alt="Profile Picture" id="profile-picture">
+      <form action="{% url 'update_profile_picture' %}" method="post" enctype="multipart/form-data" id="profile-picture-form">
+        {% csrf_token %}
+        <input type="file" name="profile_picture" id="profile-picture-input" style="display: none;" accept="image/*">
+        <label>Click to Update</label>
+        <button type="submit" id="submit-profile-picture" style="display: none;">Update</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="license-images">
+    <div>
+      <p><strong>License Front Image:</strong></p>
+      <img src="{{ user.license_front_image.url }}" alt="License Front Image" class="license-image">
+    </div>
+    <div>
+      <p><strong>License Back Image:</strong></p>
+      <img src="{{ user.license_back_image.url }}" alt="License Back Image" class="license-image">
+    </div>
+  </div>
+</div>
+
+<script>
+  
+  document.querySelector('#profile-picture').addEventListener('click', function() {
+    document.querySelector('#profile-picture-input').click();
+  });
+
+  
+  document.querySelector('#profile-picture-input').addEventListener('change', function() {
+    document.querySelector('#submit-profile-picture').click();
+  });
+</script>
+{% endblock %}

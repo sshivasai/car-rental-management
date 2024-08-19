@@ -1,0 +1,15 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'notifications/style.css' %}">
+<script src="{% static 'notifications/scripts.js' %}"></script>
+<div id="notification-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="notification {% if message.tags %}{{ message.tags }}{% endif %}">
+                <span class="notification-message">{{ message }}</span>
+                <button class="close-btn">&times;</button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+

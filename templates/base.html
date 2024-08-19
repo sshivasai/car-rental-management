@@ -1,0 +1,62 @@
+{% load static %}
+<html lang="en">
+  {% include 'notifications.html' %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direct Car Rentals | Explore & Drive Hassle-Free</title>
+  <link rel="stylesheet" href="{% static 'homepage/styles.css' %}">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo-container">
+        <img src="https://cdn.pixabay.com/photo/2012/04/28/18/53/car-43993_1280.png" alt="Direct Car Rentals Logo" class="logo">
+        <h1 >Direct Car Rentals</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'cars_list' %}">Cars</a></li>
+          <li><a href="#about">About Us</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'profile' %}">Profile</a></li>
+          <li><a href="{% url 'orders_list' %}">Bookings</a></li>
+          <li>
+            <form id="logout-form" action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <a href="#" onclick="document.getElementById('logout-form').submit();">Logout</a>
+            </form>
+          </li>
+          {% else %}
+          <li><a href="{% url 'login_page' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  {% block content %}{% endblock %}
+
+  <section id="about">
+    <h2>About Direct Car Rentals</h2>
+    <p>Direct Car Rentals is your one-stop shop for a convenient and hassle-free car rental experience. We offer a diverse fleet of vehicles to suit your needs, from compact cars for city driving to spacious SUVs for road trips. Our commitment to quality, affordability, and exceptional customer service ensures a smooth and enjoyable journey every time.</p>
+    <p>Whether you're a business traveler, a vacationer exploring new horizons, or simply need a car for a weekend getaway, Direct Car Rentals is here to help. We offer flexible rental options, competitive rates, and convenient locations to make your car rental experience seamless.</p>
+  </section>
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Direct Car Rentals. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{% static 'homepage/scripts.js' %}"></script>
+  <script>
+    window.addEventListener('scroll', function() {
+      var carImage = document.getElementById('carImage');
+      var scrollTop = window.scrollY;
+      carImage.style.transform = 'scale(' + (1 + scrollTop * -0.0005) + ')';
+    });
+  </script>
+</body>
+
+</html>

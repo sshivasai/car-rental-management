@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'payments/style.css' %}">
+<div class="container_pay">
+    <div class="payment-success-header">
+        <h1>Payment Success</h1>
+        <img src="{% static 'payments/Payment-success.png' %}" alt="Payment Success" class="paymentsuccess-logo" style="width: 150px;">
+    </div>
+
+    <div class="email-confirmation">
+        <p>Thanks for your booking. An email confirmation will be sent shortly to <strong>{{ payment.user.email }}</strong>.</p>
+    </div>
+
+    <div class="details-container">
+        <div class="booking-details">
+            <h2>Booking Details</h2>
+            <p><strong>Booking ID:</strong> {{ booking.booking_id }}</p>
+            <p><strong>Car:</strong> {{ booking.car.make }} {{ booking.car.model }}</p>
+            <p><strong>Pickup Location:</strong> {{ booking.pickup_location.location_city }}</p>
+            <p><strong>Dropoff Location:</strong> {{ booking.dropoff_location.location_city }}</p>
+            <p><strong>Pickup Date & Time:</strong> {{ booking.pickup_datetime }}</p>
+            <p><strong>Dropoff Date & Time:</strong> {{ booking.dropoff_datetime }}</p>
+            <p><strong>Payment Status:</strong> {{ payment.status }}</p>
+            <p><strong>Coupon Code:</strong> {% if booking.coupon %}{{ booking.coupon.code }}{% else %}N/A{% endif %}</p>
+            <p><strong>Actual Price:</strong> ${{ booking.actual_price }}</p>
+            <p><strong>Discount:</strong> ${{ booking.discount }}</p>
+            <p><strong>Taxes:</strong> ${{ booking.taxes }}</p>
+            <p><strong>Total Price:</strong> ${{ booking.final_price }}</p>
+        </div>
+
+        <div class="billing-details">
+            <h2>Billing Details</h2>
+            <p><strong>Customer Name:</strong> {{ payment.user.fname }} {{ payment.user.lname }}</p>
+            <p><strong>License Number:</strong> {{ payment.user.license_no }}</p>
+            <p><strong>Phone Number:</strong> {{ payment.user.phone }}</p>
+            <p><strong>Billing Name:</strong> {{ payment.billing_name }}</p>
+            <p><strong>Billing Address:</strong> {{ payment.billing_address }}</p>
+            <p><strong>Zip Code:</strong> {{ payment.zip_code }}</p>
+            <p><strong>Card Type:</strong> {{ payment.card_type }}</p>
+            <p><strong>Card Last 4 Digits:</strong> {{ payment.card_last4 }}</p>
+        </div>
+    </div>
+
+    <div class="download-receipt">
+        <h2>Download Receipt</h2>
+        <p><a href="{{ receipt_url }}" target="_blank">Download Receipt</a></p>
+    </div>
+</div>
+{% endblock %}

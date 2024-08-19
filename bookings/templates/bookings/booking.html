@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Book Your Car - Direct Car Rentals
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'bookings/style.css' %}">
+<link rel="stylesheet" href="{% static 'bookings/style_con.css' %}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<main class="main-container-book">
+  <div class="booking-container-book">
+    <div class="booking-form-book">
+      <h2 class="booking-form-title-book">Book Your Car</h2>
+      <form id="bookingForm-book" method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-book btn-primary-book">Calculate Price</button>
+      </form>
+      <button id="findDealsBtn" class="btn-book btn-secondary-book">Find Deals</button>
+      {% if pricing_details %}
+        <div class="pricing-details-book">
+          <h3 class="pricing-details-title-book">Pricing Details</h3>
+          <ul class="pricing-details-list-book">
+            <li>Total Price: <span>${{ pricing_details.total_price }}</span></li>
+            <li>Discount: <span>- ${{ pricing_details.discount_amount }}</span></li>
+            <li>Price After Discount: <span>${{ pricing_details.final_price }}</span></li>
+            <li>Tax (18% GST): <span>${{ pricing_details.tax_amount }}</span></li>
+            <li class="total-book">Final Price: <span>${{ pricing_details.final_price_with_tax }}</span></li>
+          </ul>
+          {% if pricing_details.coupon_info %}
+            <p class="coupon-applied-book">Coupon Applied: {{ pricing_details.coupon_info.code }}</p>
+            
+          {% endif %}
+          
+          <form id="confirmBookingForm" method="post" action="{% url 'confirm_booking' %}">
+            {% csrf_token %}
+            <input type="hidden" name="coupon_code" value="{% if pricing_details.coupon_info %}{{ pricing_details.coupon_info.code }}{% else %}NULL{% endif %}">
+            <input type="hidden" name="stock_id" value="{{ car_data.id }}">
+            <input type="hidden" name="pickup_location" value="{{ form.cleaned_data.pickup_location }}">
+            <input type="hidden" name="dropoff_location" value="{{ form.cleaned_data.dropoff_location }}">
+            <input type="hidden" name="pickup_date" value="{{ form.cleaned_data.pickup_date }}">
+            <input type="hidden" name="pickup_time" value="{{ form.cleaned_data.pickup_time }}">
+            <input type="hidden" name="dropoff_date" value="{{ form.cleaned_data.dropoff_date }}">
+            <input type="hidden" name="dropoff_time" value="{{ form.cleaned_data.dropoff_time }}">
+            <input type="hidden" name="total_price" value="{{ pricing_details.total_price }}">
+            <input type="hidden" name="discount_amount" value="{{ pricing_details.discount_amount }}">
+            <input type="hidden" name="final_price" value="{{ pricing_details.final_price }}">
+            <input type="hidden" name="tax_amount" value="{{ pricing_details.tax_amount }}">
+            <input type="hidden" name="final_price_with_tax" value="{{ pricing_details.final_price_with_tax }}">
+            <button type="submit" class="btn-book btn-success-book">Confirm Booking</button>
+          </form>
+          
+        </div>
+      {% endif %}
+    </div>
+    <div class="car-information-book">
+      {% if car_data %}
+        <div class="car-tile-book">
+          <img src="{{ car_data.car.car_image }}" alt="{{ car_data.car.make }} {{ car_data.car.model }}" class="car-image-book">
+          <div class="car-info-book">
+            <h3>{{ car_data.car.make }} {{ car_data.car.model }}</h3>
+            <ul class="car-info-list-book">
+              <li><strong>Type:</strong> {{ car_data.car.car_type }}</li>
+              <li><strong>Capacity:</strong> {{ car_data.car.capacity }}</li>
+              <li><strong>Price per hour:</strong> ${{ car_data.car.price_per_hour }}</li>
+              <li><strong>Available Location:</strong> {{ car_data.current_location.location_city }}</li>
+              <li><strong>Availability:</strong>
+                {% if car_data.availability_status == 'Unavailable' %}
+                  <span class="unavailable-text-book">Unavailable</span>
+                {% else %}
+                  {{ car_data.availability_status }}
+                {% endif %}
+              </li>
+            </ul>
+            {% if car_data.availability_status == 'Unavailable' %}
+              <button class="btn-book btn-secondary-book" disabled>Unavailable Now</button>
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        <p class="no-car-selected-book">No car selected.</p>
+      {% endif %}
+    </div>
+  </div>
+</main>
+
+<!-- Popup for coupons -->
+<div id="couponPopup" class="popup">
+  <div class="popup-content">
+    <span id="closeCouponPopupBtn" class="close">&times;</span>
+    <h2>Available Coupons</h2>
+    <div id="couponsList"></div>
+  </div>
+</div>
+<div id="confirmPopup" class="popup_con">
+  <div class="popup_con-content">
+    <span id="closePopupBtn" class="close_con">&times;</span>
+    <div class="popup-header">
+      <h2>Confirm Your Booking</h2>
+      <img id="popupCarImage" src="" alt="Car Image" class="popup-car-image">
+    </div>
+    <div class="popup-details">
+
+      <div class="left-column">
+        <p id="popupCarName"></p>
+        <p id="popupPickupLocation"></p>
+        <p id="popupDropoffLocation"></p>
+        <p id="popupPickupDate"></p>
+        <p id="popupPickupTime"></p>
+        <p id="popupDropoffDate"></p>
+        <p id="popupDropoffTime"></p>
+    </div>
+
+    <div class="right-column">
+      <p id="popupTotalPrice"></p>
+      <p id="popupDiscountAmount"></p>
+      <p id="popupFinalPrice"></p>
+      <p id="popupTaxAmount"></p>
+      <p id="popupFinalPriceWithTax"></p>
+  </div>
+</div>
+
+      
+    <div class="popup-footer">
+      <form id="stripePaymentForm" method="post" action="{% url 'create_checkout_session' %}">
+        {% csrf_token %}
+        <button type="submit" class="stripe-button">
+          <img src="https://cdn.dribbble.com/users/920/screenshots/3031540/media/8cb89705d9dfefc36feae51ae1ed15b4.gif" alt="Stripe logo">
+          Pay with Stripe
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="{% static 'bookings/script.js' %}"></script>
+<script src="{% static 'bookings/script_con.js' %}"></script>
+{% endblock %}

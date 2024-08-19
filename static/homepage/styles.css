@@ -1,0 +1,147 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+
+
+header {
+  background-color: #5c5757fc;
+  color: #fff;
+  padding: auto;
+  height: 70px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: auto;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 30px;
+  height: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+nav {
+  margin-left: auto;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: #555;
+}
+
+.hero {
+  background-color: #e2e2e2;
+  padding: 6rem 0;
+  min-height: 60vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.car-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.car-image {
+  max-width: 500px;
+  height: auto;
+  transition: transform 0.5s ease;
+}
+
+.car-image:scroll {
+  transform: scale(0.5);
+}
+
+.text-content {
+  padding-left: 20px;
+  margin-top: -50px; 
+}
+
+.text-content h2 {
+  margin-bottom: 10px; 
+}
+
+.landing-page-location-dropdown {
+  margin-top: -20px; 
+  font-size: 1.5em; 
+  text-align: center;
+}
+
+
+
+
+
+.select-location-select-elem {
+  padding: 5px;
+  font-size: 1em; 
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 300px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.search-button {
+  padding: 10px 20px; 
+  font-size: 1em; 
+  border-radius: 5px;
+  border: none;
+  background-color: #5c5757fc; 
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #444; 
+}
+
+
+#about {
+  background-color: #fff;
+  padding: 4rem 20px;
+  text-align: justify;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+}

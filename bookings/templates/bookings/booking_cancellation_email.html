@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Cancellation - Direct Rental Limited</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+        }
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .booking-details {
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="company-name">Direct Rental Limited</div>
+        <p>Dear {{ user.fname }} {{ user.lname }},</p>
+        <p>Your booking with ID {{ booking.booking_id }} has been cancelled on {{ booking.cancellation_time }}.</p>
+        <div class="booking-details">
+            <p><strong>Car:</strong> {{ booking.car.make }} {{ booking.car.model }}</p>
+            <p><strong>Pickup Location:</strong> {{ booking.pickup_location.location_city }}</p>
+            <p><strong>Dropoff Location:</strong> {{ booking.dropoff_location.location_city }}</p>
+            <p><strong>Total Price:</strong> ${{ booking.final_price }}</p>
+        </div>
+        <p>A refund of ${{ booking.final_price }} has been initiated to your source bank.</p>
+        <p>Thank you for choosing Direct Rental Limited.</p>
+        <div class="footer">
+            &copy; 2024 Direct Car Rentals. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,238 @@
+.main-container-book {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.booking-container-book {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.booking-form-book {
+    flex: 1;
+    max-width: 500px;
+}
+
+.car-information-book {
+    flex: 1;
+    max-width: 500px;
+}
+
+.booking-form-book h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+
+form p {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.btn-book {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-primary-book {
+    background-color:  #0056b3;
+    color: #fff;
+    border: none;
+}
+
+.btn-primary-book:hover {
+    background-color:#09d110;
+}
+
+.btn-success-book {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+}
+
+.btn-success-book:hover {
+    background-color: #218838;
+}
+
+.btn-secondary-book {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+
+.pricing-details-book {
+    margin-top: 20px;
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.pricing-details-book h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.pricing-details-book ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pricing-details-book li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.pricing-details-book .total-book {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 10px;
+    border-top: 1px solid #ced4da;
+    padding-top: 10px;
+}
+
+.coupon-applied-book {
+    margin-top: 10px;
+    font-style: italic;
+    color: #28a745;
+}
+
+.car-tile-book {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+}
+
+.car-image-book {
+    padding-top: 20px;
+    width: 100%;
+    max-width: 350px;
+    height: auto; 
+    object-fit: cover;
+    margin: auto; 
+}
+
+.car-info-book {
+    padding: 05px;
+    text-align: center; 
+}
+
+.car-info-book h3 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+
+.car-info-book ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+
+.car-info-book li {
+    margin-bottom: 10px;
+}
+
+.unavailable-text-book {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.no-car-selected-book {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .booking-container-book {
+        flex-direction: column;
+    }
+
+    .booking-form-book,
+    .car-information-book {
+        max-width: 100%;
+    }
+}
+
+
+.popup {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow-y: auto; 
+}
+
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 600px;
+    margin: 100px auto;
+    position: relative;
+    overflow: auto; 
+    max-height: calc(100% - 200px); 
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.coupon-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.select-coupon-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+}

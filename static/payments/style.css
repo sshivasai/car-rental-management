@@ -1,0 +1,73 @@
+.container_pay {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.payment-success-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.payment-success-header h1 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.paymentsuccess-logo {
+    width: 150px;
+    height: auto;
+}
+
+.email-confirmation {
+    text-align: center;
+    margin-bottom: 30px;
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.details-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.booking-details,
+.billing-details {
+    width: 48%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.booking-details h2,
+.billing-details h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.download-receipt {
+    text-align: center;
+}
+
+.download-receipt h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.download-receipt a {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.download-receipt a:hover {
+    background-color: #45a049;
+}

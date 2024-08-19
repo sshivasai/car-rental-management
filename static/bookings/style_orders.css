@@ -1,0 +1,153 @@
+
+    .container_orders {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .bookings-title {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+    }
+
+    .bookings-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .booking-card {
+        display: flex;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .booking-image {
+        flex: 0 0 200px;
+        
+    }
+
+    .booking-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .booking-details {
+        flex: 1;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+
+    .booking-details h3 {
+        margin-top: 0;
+        color: #2c3e50;
+    }
+
+    .booking-details p {
+        margin: 10px 0;
+        color: #34495e;
+    }
+
+    .cancel-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .cancel-btn:hover {
+        background-color: #c0392b;
+    }
+
+    .cancelled-notice {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .no-bookings {
+        text-align: center;
+        color: #7f8c8d;
+        font-style: italic;
+    }
+
+    .sort-form {
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    
+    .sort-field {
+        margin-bottom: 10px;
+    }
+    
+    .sort-field label {
+        display: block;
+        font-weight: bold;
+    }
+    
+    .sort-field select {
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+    
+    .sort-btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .sort-btn:hover {
+        background-color: #0056b3;
+    }
+
+    
+
+.filter-sort-form {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.filter-field,
+.sort-field {
+    margin-bottom: 10px;
+}
+
+.filter-field label,
+.sort-field label {
+    display: block;
+    font-weight: bold;
+}
+
+.filter-field select,
+.sort-field select {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.filter-sort-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter-sort-btn:hover {
+    background-color: #0056b3;
+}

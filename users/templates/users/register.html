@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'users/style_reg.css' %}">
+<div class="register-container">
+  
+  <form method="POST" enctype="multipart/form-data" action="{% url 'api_register' %}">
+    {% csrf_token %}
+    <h3>Sign Up</h3>
+    <div class="form-group">
+      <div class="form-column">
+        <label for="fname">First Name:</label>
+        <input type="text" id="fname" name="fname" required>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" title="Phone number should be 10 digits" required>
+        <label for="license_front_image">License Front Image:</label>
+        <input type="file" id="license_front_image" name="license_front_image" accept="image/*" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-column">
+        <label for="lname">Last Name:</label>
+        <input type="text" id="lname" name="lname" required>
+        <label for="license_no">License Number:</label>
+        <input type="text" id="license_no" name="license_no" required>
+        <label for="license_back_image">License Back Image:</label>
+        <input type="file" id="license_back_image" name="license_back_image" accept="image/*" required>
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+          <option value="" disabled selected>Select your gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Unknown">Prefer Not to Say</option>
+        </select>
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+      </div>
+    </div>
+    <button type="submit">Sign Up</button>
+    <p>Have an account? <a href="{% url 'login_page' %}">Login Here</a></p>
+  </form>
+</div>
+{% endblock %}

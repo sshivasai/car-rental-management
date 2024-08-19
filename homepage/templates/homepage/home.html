@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main>
+  <div class="hero">
+    <div class="car-content">
+      <img src="{% static 'homepage/images/Red-car-on-transparent-background-PNG.png' %}" alt="Car Image" class="car-image" id="carImage">
+      <div class="text-content">
+        <h2>Find Your Perfect Car</h2>
+        <p>Search and book from a wide range of cars available for rent.</p>
+        <section class="landing-page-location-dropdown">
+          <h1 class="landing-page-location-dropdown-title">Please Select a Location</h1>
+          <div class="select-location">
+            {% if locations %}
+              <select id="locationSelect" class="select-location-select-elem">
+                <option value="" selected disabled>Select a Location</option>
+                {% for location in locations %}
+                  <option value="{{ location }}">{{ location }}</option>
+                {% endfor %}
+              </select>
+              <button id="searchButton" class="search-button">
+                Search
+              </button>
+            {% else %}
+              <div>No locations available</div>
+            {% endif %}
+            <div class="select-location-select-elem-icon">
+            </div>
+          </div>
+        </section>
+        <button id="findDealsBtn" class="btn-book btn-secondary-book" style = "margin-top: 10px; background-color: rgb(49, 48, 42);">Find Deals</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<link rel="stylesheet" href="{% static 'bookings/style.css' %}">
+
+<div id="couponPopup" class="popup">
+  <div class="popup-content">
+    <span id="closeCouponPopupBtn" class="close">&times;</span>
+    <h2>Available Coupons</h2>
+    <div id="couponsList"></div>
+  </div>
+</div>
+
+<script src="{% static 'bookings/script.js' %}"></script>
+
+<script>
+  document.getElementById('searchButton').addEventListener('click', function() {
+    var location = document.getElementById('locationSelect').value;
+    if (location) {
+      window.location.href = '/cars/?location=' + location;
+    } else {
+      alert('Please select a location');
+    }
+  });
+</script>
+{% endblock %}

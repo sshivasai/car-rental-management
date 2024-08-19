@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container_orders">
+    <link rel="stylesheet" href="{% static 'bookings/style_orders.css' %}">
+    <h2 class="bookings-title">Your Bookings</h2>
+
+    
+    <form method="GET" action="{% url 'orders_list' %}" class="filter-sort-form">
+        <div class="filter-field">
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="">All</option>
+                <option value="True">Active</option>
+                <option value="False">Cancelled</option>
+            </select>
+        </div>
+        <div class="sort-field">
+            <label for="sort_by">Sort By:</label>
+            <select id="sort_by" name="sort_by">
+                <option value="">Select</option>
+                <option value="booking_date_asc">Booking Date (Old to New)</option>
+                <option value="booking_date_desc">Booking Date (New to Old)</option>
+                <option value="pickup_date_asc">Pickup Date (Old to New)</option>
+                <option value="pickup_date_desc">Pickup Date (New to Old)</option>
+                <option value="dropoff_date_asc">Dropoff Date (Old to New)</option>
+                <option value="dropoff_date_desc">Dropoff Date (New to Old)</option>
+                <option value="price_asc">Price (Low to High)</option>
+                <option value="price_desc">Price (High to Low)</option>
+                <option value="status">Status</option>
+            </select>
+        </div>
+        <button type="submit" class="filter-sort-btn">Apply Filters</button>
+    </form>
+
+    {% if bookings %}
+        <div class="bookings-list">
+            {% for booking in bookings %}
+                <div class="booking-card">
+                    <div class="booking-image">
+                        {% if booking.car.car_image %}
+                            <img src="{{ booking.car.car_image }}" alt="{{ booking.car.make }} {{ booking.car.model }}">
+                        {% else %}
+                            <img src="{% static 'images/default_car.jpg' %}" alt="Default car image">
+                        {% endif %}
+                    </div>
+                    <div class="booking-details">
+                        <h3>Booking ID: {{ booking.booking_id }}</h3>
+                        <p><strong>Booking Date Time:</strong> {{ booking.booking_time }}</p>
+                        <p><strong>Car:</strong> {{ booking.car.make }} {{ booking.car.model }}</p>
+                        <p><strong>Pickup:</strong> {{ booking.pickup_location.location_city }}</p>
+                        <p><strong>Dropoff:</strong> {{ booking.dropoff_location.location_city }}</p>
+                        <p><strong>Pickup Date & Time:</strong> {{ booking.pickup_datetime }}</p>
+                        <p><strong>Dropoff Date & Time:</strong> {{ booking.dropoff_datetime }}</p>
+                        <p><strong>Payment Status:</strong> {{ booking.payment.status }}</p>
+                        <p><strong>Coupon Used:</strong> ${{ booking.coupon.code }}</p>
+                        <p><strong>Actual Price:</strong> ${{ booking.actual_price }}</p>
+                        <p><strong>Discount Price:</strong> ${{ booking.discount }}</p>
+                        <p><strong>Taxes:</strong> ${{ booking.taxes }}</p>
+                        <p><strong>Total Price:</strong> ${{ booking.final_price }}</p>
+                        {% if booking.booking_status %}
+                            <form action="{% url 'cancel_booking' booking.booking_id %}" method="POST" onsubmit="return confirmCancellation(event);">
+                                {% csrf_token %}
+                                <button type="submit" class="cancel-btn">Cancel Booking</button>
+                            </form>
+                        {% else %}
+                            <p class="cancelled-notice" style="color:red"><em>This booking has been cancelled.</em></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-bookings">No bookings yet.</p>
+    {% endif %}
+    <script src="{% static 'bookings/script_orders.js' %}"></script>
+</div>
+{% endblock %}

@@ -6,15 +6,21 @@ pip install -r requirements.txt
 
 
 django-admin startproject car_rental_project
+
 cd car_rental_project
+
 python manage.py startapp users
+
 python manage.py startapp cars
+
 python manage.py startapp bookings
+
 python manage.py startapp payments
+
 python manage.py startapp stock_management
 
-
 python manage.py makemigrations
+
 python manage.py migrate
 
 python manage.py createsuperuser

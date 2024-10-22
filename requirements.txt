@@ -1,0 +1,8 @@
+Django
+djangorestframework
+mssql-django
+django-cors-headers
+djangorestframework-simplejwt
+bcrypt
+stripe
+xhtml2pdf
